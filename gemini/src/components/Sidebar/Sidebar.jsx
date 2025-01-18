@@ -6,13 +6,18 @@ import { useContext } from 'react'
 import { Context } from '../../contex/context'
 const Sidebar = () => {
     const [extened, setExtened] = useState(false)
-    const { onSent, prevPrompt, setRecentPromt } = useContext(Context)
+    const { onSent, prevPrompt, setRecentPromt,newChat } = useContext(Context)
+
+    const loadPromt = async (prompt)=>{
+        setRecentPromt(prompt)
+        await onSent(prompt)
+    }
     return (
         <div className='sidebar'>
             <div className="top">
 
                 <img onClick={() => { setExtened(prev => !prev) }} className='menu' src={assets.menu_icon} alt="menu_icon" />
-                <div className="newchat">
+                <div onClick={()=>newChat()} className="newchat">
                     <img src={assets.plus_icon} alt="plus_icon" />
                     {extened ? <p>New Chat</p> : null}
                 </div>
@@ -23,11 +28,11 @@ const Sidebar = () => {
                             {
                                 prevPrompt.map((item, index) => {
                                     return (
-                                        <div key={index} className="recent-entry">
+                                        <div onClick={()=>loadPromt(item)} key={index} className="recent-entry">
                                         
                                             <img src={assets.message_icon} alt="message_icon" />
                                             <p className="recent-item">
-                                                {item}
+                                                {item.slice(0,18)}...
                                             </p>
                                         </div>
                                     );
