@@ -1,5 +1,3 @@
-Here's a simple README file for your project:
-
 # Gemini Clone
 
 This project is a clone of the Gemini application, built using React and Vite.
